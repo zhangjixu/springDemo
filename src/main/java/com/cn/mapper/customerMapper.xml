@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的 namespace 当你的namespace绑定接口后，
+你可以不用写接口实现类，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句-->
+<mapper namespace="com.cn.dao.CustomerDao">
+
+    <resultMap id="custpmerResult" type="com.cn.model.Customer">
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="age" property="age"/>
+        <collection property="mobilePhone" ofType="com.cn.model.MobilePhone" javaType="list">
+            <id column="mobilePhone_id" property="mobilePhoneId"/>
+            <result column="brand" property="brand"/>
+            <result column="price" property="price"/>
+            <result column="customer_id" property="customerId"/>
+        </collection>
+    </resultMap>
+
+    <!-- id属性值必须是唯一的，不能够重复 且与 dao 里的方法名一致-->
+    <select id="getCustomer" resultMap="custpmerResult">
+        SELECT
+            c.user_id,
+            c.user_name,
+            c.age,
+            m.mobilePhone_id,
+            m.brand,
+            m.price,
+            m.customer_id
+        FROM
+            customer c,
+            mobilephone m
+        WHERE
+            c.user_id = m.customer_id
+        AND c.user_id = #{id};
+    </select>
+
+</mapper>

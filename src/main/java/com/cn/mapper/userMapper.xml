@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的 namespace 当你的namespace绑定接口后，
+你可以不用写接口实现类，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句-->
+<mapper namespace="com.cn.dao.UserDao">
+
+    <!-- 如果表字段和实体类名称不一致可以使用一下方式 resultMap 和 resultType 只能用一个 -->
+    <!--<resultMap id="BaseResultMap" type="com.cn.dhb.mybatils.email.Email">
+        <id column="id" property="recid" jdbcType="id"/>
+        <result column="projectName" property="projectName" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+    </resultMap>-->
+
+    <!-- id属性值必须是唯一的，不能够重复 且与 dao 里的方法名一致-->
+    <select id="queryAllUser" resultType="com.cn.model.User">
+        select * from user
+    </select>
+
+    <select id="queryUserById" resultType="com.cn.model.User">
+        select * from user where id = #{id}
+    </select>
+
+    <select id="query" resultType="hashMap">
+        select * from user where id = #{id}
+    </select>
+
+    <insert id="addUser">
+        insert into user(name, age) values (#{name}, #{age})
+    </insert>
+
+    <update id="updateUser">
+        update user set name = #{name}, age = #{age} where id = #{id}
+    </update>
+
+    <delete id="deleteUser">
+        delete from user where id = #{id}
+    </delete>
+
+
+</mapper>

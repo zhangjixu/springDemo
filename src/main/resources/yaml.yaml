@@ -1,0 +1,59 @@
+# 即表示url属性值；
+url: http://www.wolfcode.cn
+
+# 即表示server.host属性的值；
+server:
+  host: http://www.wolfcode.cn
+
+# 数组，ip[a,b,c]
+ip:
+  - 120.168.117.21
+  - 120.168.117.22
+  - 120.168.117.23
+
+# 常量 null用 ~ 表示
+pi: 3.14   # 定义一个数值3.14
+hasChild: true  # 定义一个boolean值 TRUE True FALSE  false，False 都可以
+name: '你好YAML'   # 定义一个字符串 字符串默认不使用引号表示, 如果字符串之中包含空格或特殊字符，需要放在引号之中 单引号和双引号都可以使用，双引号不会对特殊字符转义。字符串可以写成多行，从第二行开始，必须有一个单空格缩进。换行符会被转为空格。
+key: {child-key: value, child-key2: value2}
+date:
+  - 2018-02-17    #日期必须使用ISO 8601格式，即yyyy-MM-dd
+datetime:
+  - 2018-02-17T15:02:31+08:00    #时间使用ISO 8601格式，时间和日期之间使用 T 连接，最后使用 + 代表时区
+
+# companies: [{id: 1,name: company1,price: 200W},{id: 2,name: company2,price: 500W}] 相当于下面写法
+companies:
+  -
+    id: 1
+    name: company1
+    price: 200W
+  -
+    id: 2
+    name: company2
+    price: 500W
+
+# --- YAML可以在同一个文件中，使用---表示一个文档的开始。下面定义了两个profile，一个是development，一个production
+---
+spring:
+  profiles: development
+  server:
+    address: 127.0.0.1
+---
+spring:
+  profiles: production
+  server:
+    address: 192.168.1.120
+
+# ... 和---配合使用，在一个配置文件中代表一个文件的结束，相当于在一个yaml文件中连续写了两个yaml配置项。
+---
+time: 20:03:20
+player: Sammy Sosa
+action: strike (miss)
+...
+---
+time: 20:03:47
+player: Sammy Sosa
+action: grand slam
+...
+
+

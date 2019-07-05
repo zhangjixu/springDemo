@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的 namespace 当你的namespace绑定接口后，
+你可以不用写接口实现类，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句-->
+<mapper namespace="com.cn.dao.PersonDao">
+
+    <resultMap id="personResult" type="com.cn.model.Person">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <association property="card" javaType="com.cn.model.Card">
+            <id column="card_id" property="card_id"/>
+            <result column="address" property="address"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="cityResult" type="com.cn.model.City">
+        <id column="city_id" property="cityId"/>
+        <result column="city_name" property="cityName"/>
+        <association property="person" resultMap="personResult" />
+    </resultMap>
+
+    <!-- id属性值必须是唯一的，不能够重复 且与 dao 里的方法名一致-->
+    <select id="getPerson" resultMap="personResult">
+        select p.id, p.name, c.card_id, c.address  from person p, card c where p.id = #{id};
+    </select>
+
+    <select id="getCity" resultMap="cityResult">
+        SELECT
+            c.city_id,
+            c.city_name,
+            p.id,
+            p.`name`,
+            d.card_id,
+            d.address
+        FROM
+            city c,
+            person p,
+            card d
+        WHERE
+            c.city_id = p.id
+        AND p.id = d.card_id
+        AND c.city_id = #{id};
+    </select>
+
+</mapper>
